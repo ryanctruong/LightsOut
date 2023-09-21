@@ -2,6 +2,7 @@ package com.example.lightsout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button resetBut, rand;
 
+    int clicks;
+
     View.OnClickListener buttonClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -35,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
                 view.setBackgroundColor(getColor(R.color.black));
             }
             updateCounterLabel();
+
+            clicks++;
+            if(count() == 9){
+                Intent gotoWin = new Intent(getApplicationContext(), WinActivity.class);
+                gotoWin.putExtra("Taps", clicks);
+                gotoWin.putExtra("Fun", "Yipppiii");
+                startActivity(gotoWin);
+            }
         }
     };
 
@@ -65,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        clicks = 0;
 
         cellState = new boolean[][]{{true, true, true}, {true, true, true}, {true, true, true}};
 
@@ -72,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
         grid = findViewById(R.id.light_grid);
         countLabel = findViewById(R.id.scoreCounter);
 
-        //hello world!
         for(int i = 0; i < grid.getChildCount(); i++){
             grid.getChildAt(i).setOnClickListener(buttonClick);
         }
@@ -116,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateCounterLabel(){
-        String text = "Source: " + count();
+        String text = "Score: " + count();
         countLabel.setText(text);
     }
 
@@ -131,9 +142,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return count;
-    }
-
-    public void lightsOff(){
-
     }
 }
