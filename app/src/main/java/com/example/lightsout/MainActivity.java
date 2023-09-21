@@ -72,9 +72,7 @@ public class MainActivity extends AppCompatActivity {
         grid = findViewById(R.id.light_grid);
         countLabel = findViewById(R.id.scoreCounter);
 
-
-
-
+        //hello world!
         for(int i = 0; i < grid.getChildCount(); i++){
             grid.getChildAt(i).setOnClickListener(buttonClick);
         }
